@@ -1,0 +1,64 @@
+name: Validate and deploy CryptoFlow
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Check project files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get source code
+        uses: actions/checkout@v4
+
+      - name: Check required files
+        run: |
+          test -f index.html
+          test -f style.css
+          test -f script.js
+          test -f README.md
+          test -f report.md
+          echo "All required project files are present."
+
+      - name: Check JavaScript syntax
+        run: node --check script.js
+
+      - name: Check HTML references
+        run: |
+          grep -q 'href="style.css"' index.html
+          grep -q 'src="script.js"' index.html
+          echo "HTML references are valid."
+
+  deploy:
+    name: Publish to GitHub Pages
+    needs: validate
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Get source code
+        uses: actions/checkout@v4
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload website artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy website
+        id: deployment
+        uses: actions/deploy-pages@v4
