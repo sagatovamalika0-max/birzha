@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CryptoFlow — демонстрационный криптокошелёк и учебный интерфейс криптобиржи.">
+  <title>CryptoFlow — криптокошелёк</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="CryptoFlow главная"><span class="brand-mark">₿</span><span>Crypto<span class="brand-accent">Flow</span></span></a>
+      <div class="nav-label">МЕНЮ</div>
+      <nav>
+        <a class="nav-link active" href="#dashboard"><span>▦</span> Обзор</a>
+        <a class="nav-link" href="#markets"><span>⌁</span> Рынок</a>
+        <a class="nav-link" href="#trade"><span>⇄</span> Обмен</a>
+        <a class="nav-link" href="#activity"><span>◷</span> История</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="demo-note"><span class="pulse"></span><div><b>Демо-режим</b><small>Учебный проект</small></div></div>
+        <div class="profile"><div class="avatar">A</div><div><b>Adil</b><small>Пользователь</small></div><span class="dots">•••</span></div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div><div class="eyebrow">ПЯТНИЦА, 13 НОЯБРЯ 2026</div><h1>Обзор портфеля</h1></div>
+        <div class="top-actions"><span class="demo-pill">● DEMO ACCOUNT</span><button class="icon-btn" id="themeToggle" aria-label="Переключить тему">◐</button></div>
+      </header>
+
+      <section id="dashboard" class="hero-grid">
+        <article class="balance-card">
+          <div class="card-top"><span>Общая стоимость портфеля</span><span class="live-label"><i></i> Учебный баланс</span></div>
+          <div class="balance" id="totalBalance">$12,480.50</div>
+          <div class="balance-change"><span>↗ +$384.20 (3.18%)</span><span class="muted">за последние 24 часа</span></div>
+          <div class="balance-footer"><span>Доступно для операций</span><b id="availableBalance">$12,480.50</b></div>
+          <div class="chart-wrap">
+            <svg viewBox="0 0 700 120" role="img" aria-label="Декоративный график изменения портфеля">
+              <defs><linearGradient id="area" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#8b7cff" stop-opacity=".32"/><stop offset="1" stop-color="#8b7cff" stop-opacity="0"/></linearGradient></defs>
+              <path class="chart-area" d="M0 91 C35 80 42 92 75 72 S120 82 151 57 S198 72 226 48 S272 66 304 42 S350 59 382 35 S425 47 458 30 S502 48 533 22 S579 37 612 17 S664 26 700 8 L700 120 L0 120Z"/>
+              <path class="chart-line" d="M0 91 C35 80 42 92 75 72 S120 82 151 57 S198 72 226 48 S272 66 304 42 S350 59 382 35 S425 47 458 30 S502 48 533 22 S579 37 612 17 S664 26 700 8"/>
+            </svg>
+          </div>
+          <div class="chart-labels"><span>09:00</span><span>12:00</span><span>15:00</span><span>18:00</span><span>Сейчас</span></div>
+        </article>
+        <article class="quick-card">
+          <div class="card-heading"><div><span class="eyebrow">БЫСТРЫЕ ДЕЙСТВИЯ</span><h2>Управление</h2></div><span class="quick-icon">⚡</span></div>
+          <button class="action-button primary" id="goTrade">⇄ <span>Обменять криптовалюту</span><b>→</b></button>
+          <button class="action-button" id="addFunds">＋ <span>Пополнить демо-баланс</span><b>→</b></button>
+          <p class="hint">Все операции выполняются только в демонстрационном режиме. Реальные деньги не используются.</p>
+        </article>
+      </section>
+
+      <section class="section-block" id="markets">
+        <div class="section-heading"><div><span class="eyebrow">ОБЗОР РЫНКА</span><h2>Популярные активы</h2></div><span class="market-status"><i></i> Данные для демонстрации</span></div>
+        <div class="table-card">
+          <div class="market-row market-head"><span>Актив</span><span>Цена</span><span>Изменение за 24 ч.</span><span>Действие</span></div>
+          <div id="marketRows"></div>
+        </div>
+      </section>
+
+      <section class="lower-grid">
+        <article class="panel trade-panel" id="trade">
+          <div class="section-heading"><div><span class="eyebrow">КОНВЕРТЕР</span><h2>Быстрый обмен</h2></div><span class="panel-icon">⇄</span></div>
+          <label for="fromCoin">Отдаёте</label>
+          <div class="coin-input"><select id="fromCoin"><option value="BTC">Bitcoin (BTC)</option><option value="ETH">Ethereum (ETH)</option><option value="SOL">Solana (SOL)</option><option value="USDT">Tether (USDT)</option></select><input id="fromAmount" type="number" min="0" step="any" value="0.01"></div>
+          <button class="swap-btn" id="swapCoins" aria-label="Поменять валюты местами">⇅</button>
+          <label for="toCoin">Получаете</label>
+          <div class="coin-input"><select id="toCoin"><option value="USDT">Tether (USDT)</option><option value="BTC">Bitcoin (BTC)</option><option value="ETH">Ethereum (ETH)</option><option value="SOL">Solana (SOL)</option></select><output id="toAmount">≈ 684.20 USDT</output></div>
+          <div class="rate-info" id="rateInfo">Курс: 1 BTC = 68 420 USDT</div>
+          <button class="primary full-btn" id="exchangeBtn">Выполнить демо-обмен</button>
+          <p class="hint">Курс фиксированный и приведён только для учебной демонстрации.</p>
+        </article>
+        <article class="panel activity-panel" id="activity">
+          <div class="section-heading"><div><span class="eyebrow">ПОСЛЕДНИЕ ОПЕРАЦИИ</span><h2>История</h2></div><span class="panel-icon">◷</span></div>
+          <div id="transactions" class="transactions"><div class="empty-state">Пока нет операций. Попробуйте выполнить демо-обмен.</div></div>
+        </article>
+      </section>
+      <footer>© 2026 CryptoFlow · Учебный проект CI/CD · Не является финансовым сервисом</footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
